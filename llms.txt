@@ -1,0 +1,61 @@
+# pi-app-security-scanner
+
+Static, read-only scan of Pi app source for documented Pi SDK anti-patterns. Each rule is anchored to an official quote. Executes nothing, contacts nothing, writes nothing.
+
+## What it is
+
+A dependency-free Node tool that reads your source text and reports lines matching anti-patterns Pi's own documentation warns about. 9 rules (PSC-001..PSC-009).
+
+## What a finding means
+
+A documented anti-pattern was MATCHED IN TEXT. It does not mean the app is insecure. It does not mean the pattern is exploitable. A human should read the line.
+
+## What a clean run means
+
+No documented anti-pattern matched the text. It does NOT mean the app is secure. It is NOT a substitute for a review.
+
+## Severity
+
+Severity is how DIRECTLY the matched text contradicts the recorded official rule. It is NOT how severe an exploit would be, and not whether one exists.
+
+## Commands
+
+```
+node scan-cli.mjs --rules          # the 9 rules, each with its official quote
+node scan-cli.mjs --scan DIR       # scan a directory (read-only)
+node scan-cli.mjs --scan DIR --json
+node scan-cli.mjs --boundaries     # what this scan cannot do
+node scan-cli.mjs --severity       # how severity is defined (and what it is not)
+node scan-cli.mjs --sources        # official sources, by rule
+node scan-cli.mjs --ignore         # the suppression model
+node test/run.mjs                  # offline invariants
+```
+
+## Rules
+
+- PSC-001 high: Server API Key in client-reachable code (Platform API warning)
+- PSC-002 high: client user object trusted without accessToken verification (Mistake 2)
+- PSC-003 high: feature granted before server-side completion (Mistake 3)
+- PSC-004 low: payment callback paths worth cross-checking (Mistake 4)
+- PSC-005 medium: user-specific call without Authorization header (Mistake 5)
+- PSC-006 high: rewarded-ad reward granted on client result alone (Mistake 6)
+- PSC-007 medium: accessToken read from a non-public internal property (Mistake 7)
+- PSC-008 medium: completion called with empty paymentId/txid (Mistake 8)
+- PSC-009 low: Pi SDK used with no visible Pi.init() (Mistake 1)
+
+## Never claimed
+
+An app is not certified secure or insecure. A finding is not exploitable. Pi has not approved or endorsed anything. A clean run is not a pass.
+
+## Limits
+
+Static only: no data-flow analysis, no dependency/CVE analysis, no secret-validity check, no execution of scanned code, no network.
+
+## Pages
+
+- Rules: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/RULES.md
+- Boundaries: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/BOUNDARIES.md
+- Limits: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/HTTP-AND-LIMITS.md
+- Decisions: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/DECISIONS.md
+- Sources: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/SOURCES.md
+- Verification: https://github.com/aybvip/pi-app-security-scanner/blob/main/docs/VERIFICATION.md

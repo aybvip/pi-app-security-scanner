@@ -1,0 +1,19 @@
+{
+  "name": "pi-app-security-scanner",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Static, read-only scan of Pi app source for documented Pi SDK anti-patterns. Each rule is anchored to an official quote. Executes nothing. No network.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": ["pi-network", "security", "static-analysis", "pi-sdk", "read-only", "developer-tools"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node test/run.mjs",
+    "rules": "node scan-cli.mjs --rules",
+    "boundaries": "node scan-cli.mjs --boundaries",
+    "severity": "node scan-cli.mjs --severity",
+    "sources": "node scan-cli.mjs --sources",
+    "scan": "node scan-cli.mjs --scan ."
+  },
+  "files": ["README.md", "llms.txt", "scan-cli.mjs", "scan.mjs", "render.mjs", "lib.mjs", "docs", "test", "LICENSE"]
+}
